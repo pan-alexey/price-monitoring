@@ -1,0 +1,13 @@
+module.exports = {
+    "auth" : "n1w15YFX|31TdEjjlJzYLv%G84M5Vp|h", // Авторизация
+    "threads" : 1, // Количество потоков для каждого конкурента
+    "min_percent" : 5, // Минимальный процент наценки
+    "proxy" : "82.146.56.177:3022",
+    "threads_multiplicator" : {
+        "все инструменты" : 2
+    },
+    "favorite_competitor" : [
+        "220 вольт",
+        "все инструменты",
+    ]
+}
