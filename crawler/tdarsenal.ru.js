@@ -13,28 +13,32 @@ const config = require(root_path+'/config/puppeteer.js');
 //--------------------------------------------------------------------------------------//
 module.exports = (async function(array) {
     const start= new Date().getTime();
+    
 
     let browserPparams = {};
     browserPparams.headless = false;//true;
     browserPparams.ignoreHTTPSErrors = true;
 
+
     let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
     if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+    
 
+    
     const browser = await puppeteer.launch(browserPparams);
     const page = await browser.newPage();
     await page.setViewport({ width:  1366, height: 768 });
     //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
 
 
-	// -- Отключаем картинки и стили --//
+	//-- Отключаем картинки и стили --//
 	await page.setRequestInterception(true);
 	page.on('request', request => {
-        if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
+        if ( request.resourceType() === 'image'  || request.resourceType() == 'stylesheet' )request.abort();
 	    else request.continue();
 	});
-    // --/ Отключаем картинки и стили --//
+    //--/ Отключаем картинки и стили --//
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
@@ -56,7 +60,7 @@ module.exports = (async function(array) {
 
                 await page.goto(pureUrl,{timeout: 300000});
                 await page.waitFor(1000);
-
+                
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
                 });
@@ -70,8 +74,7 @@ module.exports = (async function(array) {
                 let priceAdd = false;
                
                 // Парсинг наличия
-                let selector = $(".info-product")
-                                .find(".availability")
+                let selector = $(".info-product").find(".availability")
                                 .text().toLowerCase();
                 let avalible = ( selector.indexOf("в наличии")>=0  ) ? true : false;
 
@@ -81,11 +84,13 @@ module.exports = (async function(array) {
                     price : price,
                     priceAdd : priceAdd,
                     avalible : avalible,
-                    time : moment().format("YYYY-MM-DD HH:mm:ss"),
+                    time : moment().format("YYYY-MM-DD HH:mm:ss")
                 }
             }catch(e){
                 result[array[i]] = {
                     status : "error",
+                    price : '',
+                    
                 }
             }
             //--------------------------------------------//
@@ -94,5 +99,11 @@ module.exports = (async function(array) {
     browser.close();
     const end = new Date().getTime();
     let elapsed = end - start;
+    let speed = elapsed/array.length;
+    // Выводим в консоль среднюю скорость обработки;
+    console.log("+++ Средняя скорость обработки 220-вольт "+speed+"ms +++");
+    
+
+
     return result;
 });

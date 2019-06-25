@@ -197,6 +197,9 @@ module.exports = (async function(sheet) {
         result[i][keys["цена продажная"]] = value["price"] ? parseInt(value["price"]) : "";
         calc["продажная"] = result[i][keys["цена продажная"]];
 
+        // цена продажная (*)
+        result[i][keys["цена продажная (*)"]] = value["price_retail"] ? parseInt(value["price_retail"]) : "";
+
 
         //Создаем массив конкурентов
         let competitors = [];

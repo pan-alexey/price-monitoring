@@ -74,7 +74,13 @@ module.exports = (async function(sheet) {
         /* Тут можно задать значение на количество потоков */
         // Разбиваем url на части (с целью распаралелить процесс)
         let threads = config.threads;
-            threads = name == "все инструменты" ? parseInt( threads * 2 ) : threads;
+        if (typeof config.threads_competitor[name] !== 'undefined') {
+            threads = config.threads_competitor[name];
+        }
+
+//threads_competitor
+
+            //threads = name == "все инструменты" ? parseInt( threads * 2 ) : threads;
 
 
         let parts = sub_array(data[raw_name], threads);

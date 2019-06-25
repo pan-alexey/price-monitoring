@@ -20,13 +20,13 @@ module.exports = (async function(array) {
 
     let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
-    if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+    //if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+
 
     const browser = await puppeteer.launch(browserPparams);
     const page = await browser.newPage();
     await page.setViewport({ width:  1366, height: 768 });
     //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
-
 
 	// // -- Отключаем картинки и стили --//
 	// await page.setRequestInterception(true);

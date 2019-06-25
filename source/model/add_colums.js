@@ -22,10 +22,10 @@ module.exports = (async function(sheet) {
         }
 
         result[i][index++] = i!=0 ? '' : "Остаток";
-        result[i][index++] = i!=0 ? '' : "Дата";
+        //result[i][index++] = i!=0 ? '' : "Дата";
         result[i][index++] = i!=0 ? '' : "Цена закупки";
         result[i][index++] = i!=0 ? '' : "Цена продажная";
-
+        result[i][index++] = i!=0 ? '' : "Цена продажная (*)";
 
         result[i][index++] = i!=0 ? '' : "Рекомендованная цена руб. (В наличии + избранное)";
         result[i][index++] = i!=0 ? '' : "Рекомендованная цена руб. (В наличии)";

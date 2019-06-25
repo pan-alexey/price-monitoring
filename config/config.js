@@ -3,7 +3,7 @@ module.exports = {
     "threads" : 1, // Количество потоков для каждого конкурента
     "min_percent" : 5, // Минимальный процент наценки
     "proxy" : "82.146.56.177:3022",
-    "threads_multiplicator" : {
+    "threads_competitor" : {
         "все инструменты" : 2
     },
     "favorite_competitor" : [

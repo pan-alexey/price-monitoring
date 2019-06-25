@@ -89,13 +89,20 @@ module.exports = (async function(sheet, name) {
             }
             //-----------------------------------------------------------//
         }
-
-
         //----------------------------------------------------------------------//
-        for (let j = keys['цена продажная']+1;  j < keys['минимальная цена конкурента руб. (все)']; j++) {
+        //----------------------------------------------------------------------//
+
+
+        
+        //----------------------------------------------------------------------//
+        //----------------------------------------------------------------------//
+        for (let j = keys['цена продажная']+1;  j <= keys['минимальная цена конкурента руб. (все)']; j++) {
             let value = parseInt(sheet[i][j]);
             //-----------------------------------------------------------------//
-            if( !value ) continue;
+            if( !value ) {
+                worksheet.getRow(i+1).getCell(j+1).value  = "";
+                continue;
+            }
             worksheet.getRow(i+1).getCell(j+1).value  = value;
 
             let price = parseInt(sheet[i][keys['цена продажная']]);
@@ -133,6 +140,9 @@ module.exports = (async function(sheet, name) {
             }
             if( sheet[i][j]['status'] == "ok" ){
                 let price = sheet[i][j]['price'] ? sheet[i][j]['price'] : "####";
+
+
+
                 worksheet.getRow(i+1).getCell(j+1).value  = { text: price, hyperlink: sheet[i][j]['url'] };
                 //-----------------------------------------------//
                 if( sheet[i][j]['avalible'] ){

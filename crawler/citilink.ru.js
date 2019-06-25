@@ -20,28 +20,37 @@ module.exports = (async function(array) {
 
     let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
-    //if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+    if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+
+
+
+    const cookie = {
+        name: 'login_email',
+        value: 'set_by_cookie@domain.com',
+        domain: '.paypal.com',
+
+    }
+
+
 
     const browser = await puppeteer.launch(browserPparams);
     const page = await browser.newPage();
     await page.setViewport({ width:  1366, height: 768 });
+    //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
 
-    
-
-	// -- Отключаем картинки и стили --//
-	await page.setRequestInterception(true);
-	page.on('request', request => {
-        if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
-	    else request.continue();
-	});
-    // --/ Отключаем картинки и стили --//
-
-
+	// // -- Отключаем картинки и стили --//
+	// await page.setRequestInterception(true);
+	// page.on('request', request => {
+    //     if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
+	//     else request.continue();
+	// });
+    // // --/ Отключаем картинки и стили --//
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
-        await page.goto("https://technopoint.ru/",{timeout: 300000});
-        //await page.waitFor(3000);
+        await page.goto("https://www.citilink.ru/",{timeout: 300000});
+        await page.goto("https://www.citilink.ru/?action=changeCity&space=krd_cl:",{timeout: 300000});
+        await page.waitFor(3000);
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
 
@@ -55,9 +64,8 @@ module.exports = (async function(array) {
             try {
 
                 let pureUrl = array[i].split('?')[0];
-
                 await page.goto(pureUrl,{timeout: 300000});
-                await page.waitFor(200);
+                await page.waitFor(1000);
 
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
@@ -66,24 +74,21 @@ module.exports = (async function(array) {
 
                 //Цена на товар
                 let price = $('[itemprop="offers"]').find('[itemprop="price"]').attr('content');
+                    price = price.replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
                     price = price && !isNaN(price) ? parseInt(price) : false;
+                    price = price!==0 ? price : false;
 
+                    
                 // Перечеркнутая цена
-                let priceAdd =  $('[itemprop="offers"]').find(".price .prev-price-total").first().text().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' ) ;
+                let priceAdd =   $('.product-sidebar').find('.old-price').text().replace(/[^0-9]/g, "");
                     priceAdd = priceAdd && !isNaN(priceAdd) ? parseInt(priceAdd) : false;
-
-
-                
-
-
-
+               
                 // Парсинг наличия
-                let selector = $('[itemprop="offers"]').find('.btn-cart').text().toLowerCase();
-                let avalible = ( selector.indexOf("купить")>=0  ) ? true : false;;
+                let selector = $(".product-sidebar .add_to_cart").text().toLowerCase();
+                let avalible = ( selector.indexOf("купить")>=0  ) ? true : false;
 
                 //Формируем результат
                 result[array[i]] = {
-                    url: array[i],
                     status : "ok",
                     price : price,
                     priceAdd : priceAdd,
@@ -93,7 +98,6 @@ module.exports = (async function(array) {
             }catch(e){
                 result[array[i]] = {
                     status : "error",
-                    url: array[i],
                 }
             }
             //--------------------------------------------//
