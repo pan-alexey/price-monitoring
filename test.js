@@ -13,11 +13,10 @@ const competitor = require(root_path+'/config/competitor');
 (async () => {
     // console.log("test comptetitor");
     // name = competitor["220 вольт"];
-    crawler = require( root_path+"/crawler/"+ competitor["юлмарт"] );
+    crawler = require( root_path+"/crawler/"+ competitor["элитех"] );
     let url = await crawler([
-        'https://technopoint.ru/product/293c6c667f973330/surupovert-dewalt-dcf610d2-sale/',
-        "https://technopoint.ru/product/b5f5893494d73361/drel-surupovert-bosch-gsr-1080-2-li-sale/",
-        "https://technopoint.ru/product/6ba48d9dadea8a5a/drel-surupovert-bosch-psr-1800-li-2-sale/"
+        'http://elitech-m.ru/motobloki/elitech-kb-506.html',
+        'http://elitech-m.ru/motobloki/elitech-kb-503km.html'
     ]);
     console.log(url);
 })();

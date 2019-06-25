@@ -15,5 +15,8 @@ module.exports = {
     "юлмарт"  : "ulmart.ru",
 
 
+    "элитех"  : "elitech-m.ru",
+
+
 
 }
