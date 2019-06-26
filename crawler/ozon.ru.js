@@ -42,7 +42,7 @@ module.exports = (async function(array) {
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
-        await page.goto("https://elitech-m.ru",{timeout: 300000});
+        await page.goto("https://ozon.ru",{timeout: 300000});
         await page.waitFor(3000);
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
@@ -67,15 +67,15 @@ module.exports = (async function(array) {
                 let $ = cheerio.load(innerHTML);
 
                 //Цена на товар
-                let price =  ( $('.content_prices').find('#our_price_display').text()  ).toString().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
+                let price =  ( $('[itemprop="offers"]').find('.saleblock-price').text()  ).toString().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
                     price = price && !isNaN(price) ? parseInt(price) : false;
 
                 // Перечеркнутая цена
                 let priceAdd =  false;
                
                 // Парсинг наличия
-                let selector = $(".product_attributes").find("#availability_value").text().toLowerCase();
-                let avalible = ( selector.indexOf("в наличии")>=0 && selector.indexOf("нет в наличии")==-1 ) ? true : false;
+                let selector = $('[data-test-id="no-price"]').text();
+                let avalible = selector.length ? false : true;
 
                 //Формируем результат
                 result[array[i]] = {
@@ -98,7 +98,7 @@ module.exports = (async function(array) {
     let elapsed = end - start;
     let speed = elapsed/array.length;
     // Выводим в консоль среднюю скорость обработки;
-    console.log("+++ Средняя скорость обработки элитех "+speed+"ms +++");
+    console.log("+++ Средняя скорость обработки озон "+speed+"ms +++");
     
 
 

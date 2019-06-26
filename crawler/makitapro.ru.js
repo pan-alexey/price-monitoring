@@ -13,23 +13,21 @@ const config = require(root_path+'/config/puppeteer.js');
 //--------------------------------------------------------------------------------------//
 module.exports = (async function(array) {
     const start= new Date().getTime();
-    
 
     let browserPparams = {};
     browserPparams.headless = false;//true;
     browserPparams.ignoreHTTPSErrors = true;
 
-
     let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
     if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
-    
 
-    
+
+
+
     const browser = await puppeteer.launch(browserPparams);
     const page = await browser.newPage();
     await page.setViewport({ width:  1366, height: 768 });
-    //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
 
 
 	// -- Отключаем картинки и стили --//
@@ -42,8 +40,9 @@ module.exports = (async function(array) {
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
-        await page.goto("https://elitech-m.ru",{timeout: 300000});
-        await page.waitFor(3000);
+        await page.goto("https://www.makitapro.ru",{timeout: 300000});
+        await page.waitFor(300);
+
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
 
@@ -60,22 +59,27 @@ module.exports = (async function(array) {
 
                 await page.goto(pureUrl,{timeout: 300000});
                 await page.waitFor(1000);
-                
+
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
                 });
                 let $ = cheerio.load(innerHTML);
 
                 //Цена на товар
-                let price =  ( $('.content_prices').find('#our_price_display').text()  ).toString().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
+                let price = $('.catalog__item-buy-basket').find('[itemprop="price"]').first().text();
+
+                    price = price.replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
                     price = price && !isNaN(price) ? parseInt(price) : false;
 
                 // Перечеркнутая цена
-                let priceAdd =  false;
+                let priceAdd = $('.catalog__item-buy-basket').find('.catalog__item-buy-row-value_through').first().text();
+
+                    priceAdd = priceAdd.replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
+                    priceAdd = priceAdd && !isNaN(priceAdd) ? parseInt(priceAdd) : false;
                
                 // Парсинг наличия
-                let selector = $(".product_attributes").find("#availability_value").text().toLowerCase();
-                let avalible = ( selector.indexOf("в наличии")>=0 && selector.indexOf("нет в наличии")==-1 ) ? true : false;
+                let selector = $('.catalog__item-buy-basket-btn').find(".catalog__item-buy-basket-btn-label").text().toLowerCase();
+                let avalible = ( selector.indexOf("в корзину")>=0  ) ? true : false;
 
                 //Формируем результат
                 result[array[i]] = {
@@ -83,7 +87,7 @@ module.exports = (async function(array) {
                     price : price,
                     priceAdd : priceAdd,
                     avalible : avalible,
-                    time : moment().format("YYYY-MM-DD HH:mm:ss")
+                    time : moment().format("YYYY-MM-DD HH:mm:ss"),
                 }
             }catch(e){
                 result[array[i]] = {
@@ -96,11 +100,5 @@ module.exports = (async function(array) {
     browser.close();
     const end = new Date().getTime();
     let elapsed = end - start;
-    let speed = elapsed/array.length;
-    // Выводим в консоль среднюю скорость обработки;
-    console.log("+++ Средняя скорость обработки элитех "+speed+"ms +++");
-    
-
-
     return result;
 });

@@ -32,22 +32,39 @@ module.exports = (async function(array) {
     //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
 
 
-	// -- Отключаем картинки и стили --//
-	await page.setRequestInterception(true);
-	page.on('request', request => {
-        if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
-	    else request.continue();
-	});
-    // --/ Отключаем картинки и стили --//
+	// // -- Отключаем картинки и стили --//
+	// await page.setRequestInterception(true);
+	// page.on('request', request => {
+    //     if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
+	//     else request.continue();
+	// });
+    // // --/ Отключаем картинки и стили --//
 
+ 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
-        await page.goto("https://elitech-m.ru",{timeout: 300000});
+        await page.goto("https://eldorado.ru",{timeout: 300000});
+        await page.waitFor(300);
+        const regionWrapper = await page.$('a[class^="Region__Link"]');
+        await regionWrapper.click();
+        await page.waitFor(1000);
+
+        await page.evaluate(()=>{
+
+            const nodeList = document.querySelectorAll('li[class^="CitiesList__Item"]');
+            let regionButton = null;
+            for(let i = 0; i < nodeList.length; ++i) {
+                if (nodeList[i].querySelector('span').textContent === "Краснодар") {
+                    regionButton = nodeList[i].querySelectorAll('span')[0];
+                };
+            };
+            regionButton.click(); 
+
+        }); 
+
         await page.waitFor(3000);
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
-
-
 
     let result = {};
     for (let i = 0; i < array.length; i++) {
@@ -67,15 +84,16 @@ module.exports = (async function(array) {
                 let $ = cheerio.load(innerHTML);
 
                 //Цена на товар
-                let price =  ( $('.content_prices').find('#our_price_display').text()  ).toString().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
+                let price =  ( $('.buyBox').find('.addToCartBig').attr('data-price')  );
                     price = price && !isNaN(price) ? parseInt(price) : false;
 
                 // Перечеркнутая цена
                 let priceAdd =  false;
                
                 // Парсинг наличия
-                let selector = $(".product_attributes").find("#availability_value").text().toLowerCase();
-                let avalible = ( selector.indexOf("в наличии")>=0 && selector.indexOf("нет в наличии")==-1 ) ? true : false;
+                let selector = $(".buyBox").find(".not-available").text().toLowerCase();
+                let avalible = selector.length ? false : true;
+                // let avalible = ( selector.indexOf("в наличии")>=0 && selector.indexOf("нет в наличии")==-1 ) ? true : false;
 
                 //Формируем результат
                 result[array[i]] = {
@@ -98,7 +116,7 @@ module.exports = (async function(array) {
     let elapsed = end - start;
     let speed = elapsed/array.length;
     // Выводим в консоль среднюю скорость обработки;
-    console.log("+++ Средняя скорость обработки элитех "+speed+"ms +++");
+    console.log("+++ Средняя скорость обработки эльдорадо "+speed+"ms +++");
     
 
 
