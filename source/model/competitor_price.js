@@ -78,10 +78,6 @@ module.exports = (async function(sheet) {
             threads = config.threads_competitor[name];
         }
 
-//threads_competitor
-
-            //threads = name == "все инструменты" ? parseInt( threads * 2 ) : threads;
-
 
         let parts = sub_array(data[raw_name], threads);
 

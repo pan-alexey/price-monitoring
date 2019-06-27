@@ -32,13 +32,13 @@ module.exports = (async function(array) {
     //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
 
 
-	// -- Отключаем картинки и стили --//
-	await page.setRequestInterception(true);
-	page.on('request', request => {
-        if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
-	    else request.continue();
-	});
-    // --/ Отключаем картинки и стили --//
+	// // -- Отключаем картинки и стили --//
+	// await page.setRequestInterception(true);
+	// page.on('request', request => {
+    //     if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
+	//     else request.continue();
+	// });
+    // // --/ Отключаем картинки и стили --//
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
@@ -95,12 +95,10 @@ module.exports = (async function(array) {
     }
     browser.close();
     const end = new Date().getTime();
-    let elapsed = end - start;
-    let speed = elapsed/array.length;
+    let elapsed = parseInt( (end - start)/1000 ) ;
+    let speed = parseInt(elapsed/array.length);
     // Выводим в консоль среднюю скорость обработки;
-    console.log("+++ Средняя скорость обработки озон "+speed+"ms +++");
-    
-
+    console.log(" [competitors: '"+__filename.slice(__dirname.length + 1, -3)+"'; elapsed time: '"+elapsed+"'; count: "+array.length+"; avg: '"+speed+"';]");
 
     return result;
 });

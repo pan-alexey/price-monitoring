@@ -97,6 +97,10 @@ module.exports = (async function(array) {
     }
     browser.close();
     const end = new Date().getTime();
-    let elapsed = end - start;
+    let elapsed = parseInt( (end - start)/1000 ) ;
+    let speed = parseInt(elapsed/array.length);
+    // Выводим в консоль среднюю скорость обработки;
+    console.log(" [competitors: '"+__filename.slice(__dirname.length + 1, -3)+"'; elapsed time: '"+elapsed+"'; count: "+array.length+"; avg: '"+speed+"';]");
+
     return result;
 });
