@@ -15,13 +15,13 @@ module.exports = {
     "юлмарт"  : "ulmart.ru",
     "элитех"  : "elitech-m.ru",
     "макита-про"  : "makitapro.ru",
-    "эльдорадо"  : "eldorado.ru",
+    "эльдорадо (003)"  : "eldorado.ru",
     "23киловатт"  : "23kw.ru",
-    "озон"  : "ozon.ru",
+    "ozon"  : "ozon.ru",
     "юлмарт"  : "ulmart.ru",
     "котофото"  : "kotofoto.ru", 
     "eлмолл23"  : "elmall23.ru", 
-    "онлайнтрейд"  : "onlinetrade.ru",
+    "онлайн трейд"  : "onlinetrade.ru",
     "ударник"  : "udarnik74.ru", 
 
 

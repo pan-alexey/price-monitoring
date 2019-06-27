@@ -41,7 +41,7 @@ module.exports = (async function(array) {
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
         await page.goto("https://beru.ru/",{timeout: 300000});
-        await page.waitFor(3000);
+        await page.waitFor(config.delay);
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
 
