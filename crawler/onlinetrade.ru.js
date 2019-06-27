@@ -13,39 +13,37 @@ const config = require(root_path+'/config/puppeteer.js');
 //--------------------------------------------------------------------------------------//
 module.exports = (async function(array) {
     const start= new Date().getTime();
+    
 
     let browserPparams = {};
     browserPparams.headless = false;//true;
     browserPparams.ignoreHTTPSErrors = true;
 
+
     let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
     if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+    
 
-
-
-
+    
     const browser = await puppeteer.launch(browserPparams);
     const page = await browser.newPage();
     await page.setViewport({ width:  1366, height: 768 });
+    //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
 
 
-	// -- Отключаем картинки и стили --//
+	//-- Отключаем картинки и стили --//
 	await page.setRequestInterception(true);
 	page.on('request', request => {
         if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
 	    else request.continue();
 	});
-    // --/ Отключаем картинки и стили --//
+    //--/ Отключаем картинки и стили --//
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
-        await page.goto("https://www.ulmart.ru/",{timeout: 300000});
+        await page.goto("https://www.onlinetrade.ru/?c=11",{timeout: 300000});
         await page.waitFor(300);
-
-        await page.evaluate(() => changeCity('281','krasnodar','Краснодар') ); //(исполнения скрипта в браузере)
-
-       await page.waitFor(300);
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
 
@@ -61,26 +59,29 @@ module.exports = (async function(array) {
                 let pureUrl = array[i].split('?')[0];
 
                 await page.goto(pureUrl,{timeout: 300000});
-                await page.waitFor(200);
-
+                await page.waitFor(1000);
+                
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
                 });
                 let $ = cheerio.load(innerHTML);
 
                 //Цена на товар
-                let price = $('[itemprop="offers"]').find('[itemprop="price"]').attr('content');;
-                    price = price.replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
+                let price = $('[itemprop="offers"]').find('[itemprop="price"]').attr('content');
                     price = price && !isNaN(price) ? parseInt(price) : false;
 
                 // Перечеркнутая цена
-                let priceAdd =  $('.b-product-card__body').find(".b-price_old").first().text().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' ) ;
+                let priceAdd =   $('[itemprop="offers"]').find('.catalog__displayedItem__oldPrice').text().replace(/[^0-9]/g, "");
                     priceAdd = priceAdd && !isNaN(priceAdd) ? parseInt(priceAdd) : false;
-               
+
+                
+
+
+
                 // Парсинг наличия
-                let selector = $('#addToCart_btn')
+                let selector = $('[itemprop="offers"]').find('[data-handler="buy"]')
                                .text().toLowerCase();
-                let avalible = ( selector.indexOf("купить")>=0  ) ? true : false;
+                let avalible = (  selector.indexOf("купить")>=0  ) ? true : false;
 
                 //Формируем результат
                 result[array[i]] = {
@@ -88,11 +89,13 @@ module.exports = (async function(array) {
                     price : price,
                     priceAdd : priceAdd,
                     avalible : avalible,
-                    time : moment().format("YYYY-MM-DD HH:mm:ss"),
+                    time : moment().format("YYYY-MM-DD HH:mm:ss")
                 }
             }catch(e){
                 result[array[i]] = {
                     status : "error",
+                    price : '',
+                    
                 }
             }
             //--------------------------------------------//
@@ -101,5 +104,11 @@ module.exports = (async function(array) {
     browser.close();
     const end = new Date().getTime();
     let elapsed = end - start;
+    let speed = elapsed/array.length;
+    // Выводим в консоль среднюю скорость обработки;
+    console.log("+++ Средняя скорость обработки 220-вольт "+speed+"ms +++");
+    
+
+
     return result;
 });

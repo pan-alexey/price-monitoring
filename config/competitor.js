@@ -18,7 +18,11 @@ module.exports = {
     "эльдорадо"  : "eldorado.ru",
     "23киловатт"  : "23kw.ru",
     "озон"  : "ozon.ru",
-
+    "юлмарт"  : "ulmart.ru",
+    "котофото"  : "kotofoto.ru", 
+    "eлмолл23"  : "elmall23.ru", 
+    "онлайнтрейд"  : "onlinetrade.ru",
+    "ударник"  : "udarnik74.ru", 
 
 
 }

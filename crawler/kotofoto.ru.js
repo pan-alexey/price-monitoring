@@ -22,14 +22,9 @@ module.exports = (async function(array) {
     browserPparams.args = ['--ignore-certificate-errors'];
     if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
 
-
-
-
     const browser = await puppeteer.launch(browserPparams);
     const page = await browser.newPage();
     await page.setViewport({ width:  1366, height: 768 });
-
-
 	// -- Отключаем картинки и стили --//
 	await page.setRequestInterception(true);
 	page.on('request', request => {
@@ -40,12 +35,8 @@ module.exports = (async function(array) {
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
-        await page.goto("https://www.ulmart.ru/",{timeout: 300000});
-        await page.waitFor(300);
-
-        await page.evaluate(() => changeCity('281','krasnodar','Краснодар') ); //(исполнения скрипта в браузере)
-
-       await page.waitFor(300);
+        await page.goto("https://kotofoto.ru/krasnodar/",{timeout: 300000});
+        //await page.waitFor(30000);
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
 
@@ -61,7 +52,7 @@ module.exports = (async function(array) {
                 let pureUrl = array[i].split('?')[0];
 
                 await page.goto(pureUrl,{timeout: 300000});
-                await page.waitFor(200);
+                await page.waitFor(5000);
 
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
@@ -69,16 +60,16 @@ module.exports = (async function(array) {
                 let $ = cheerio.load(innerHTML);
 
                 //Цена на товар
-                let price = $('[itemprop="offers"]').find('[itemprop="price"]').attr('content');;
+                let price = $('[itemprop="offers"]').find('[itemprop="price"]').attr('content');
                     price = price.replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
                     price = price && !isNaN(price) ? parseInt(price) : false;
 
                 // Перечеркнутая цена
-                let priceAdd =  $('.b-product-card__body').find(".b-price_old").first().text().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' ) ;
+                let priceAdd =  $('[itemprop="offers"]').find(".oldpricest").first().text().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' ) ;
                     priceAdd = priceAdd && !isNaN(priceAdd) ? parseInt(priceAdd) : false;
                
                 // Парсинг наличия
-                let selector = $('#addToCart_btn')
+                let selector = $('[itemtype="http://schema.org/Product"]').find('.gotocart').first()
                                .text().toLowerCase();
                 let avalible = ( selector.indexOf("купить")>=0  ) ? true : false;
 
