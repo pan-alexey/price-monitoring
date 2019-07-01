@@ -10,5 +10,8 @@ module.exports = {
     "favorite_competitor" : [
         "220 вольт",
         "все инструменты",
+    ],
+    "accumulate_competitor" : [
+        
     ]
 }
