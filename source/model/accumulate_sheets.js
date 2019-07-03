@@ -4,46 +4,86 @@ const csv = require('async-csv');
 const root_path = path.dirname(require.main.filename || process.mainModule.filename);
 const sheets = require(root_path+'/config/docs.js');
 
+const config = require(root_path+'/config/config');
+const array_to_obj = require(root_path+'/source/helpers/array_to_object');
+const sub_array = require(root_path+'/source/helpers/sub_array');
+const split_array = require(root_path+'/source/helpers/split_array');
+const moment = require('moment');
+
+
+//----------------------------------------------------//
+let createArray = function(lenght, def = ""){
+    let result = [];
+    for (let index = 0; index < lenght; index++) {
+        result.push(def);
+    }
+    return result;
+}
+//----------------------------------------------------//
+
+
+
 
 module.exports = (async function() {
 
 
-    let data  = [];
+
+     // Создаем объект
+     let array = [['артикул', "файл", 'дата', 'мин. % наценки' , 'название' ,  'цена на сайте' ,  'цена закупки' ,  'рекомендованная цена', 'минимальная цена конкурента' , 'код поставщика']];
+     for (let competitor in config.accumulate_competitor) {
+         array[0].push( competitor );
+     }
+     let result = array_to_obj(array);
+
+    
+
+
     for (let sheet in sheets) {
         uri = "https://docs.google.com/spreadsheets/d/"+sheets[sheet]+"/export?format=csv";
         let req = await request(uri, {
                 method: 'GET',
                 headers: {},
         });
-        let sheetCSV = await csv.parse(req.body);
-        data.push( sheetCSV.map(data=>{ return data;}) ); // immputable data
+        let data = await csv.parse(req.body);
+        data[0].forEach( (element,i) => {
+            data[0][i] = element.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
+        });
+        data =  array_to_obj( data );
+
+
+
+        // Создаем конкуретов если их не существует
+        // т.к. столбец "Артикул" существует у всех документов, то ориентируемся не эту длинну
+        for (let row in result) {
+            if( data[row] == undefined ) {
+
+                let dummy = "";
+                if (row == "файл") { dummy = sheet;}
+                if (row == "дата") { dummy = moment().format("YYYYMMDD HH-mm-ss");}
+                data[row] = createArray( data["артикул"].length , dummy);
+
+            }
+        }
+
+        for (let row in result) {
+            result[row] = result[row].concat(data[row]);
+        }
     }
 
 
-
-
-
-    // //---------- get url google docs ---------------------------------------------------//
-    // name = name.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
-    // let uri = false;
-    // for (let sheet in sheets) {
-    //   if(name == sheet.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase()){
-        
-    //     uri = "https://docs.google.com/spreadsheets/d/"+sheets[sheet]+"/export?format=csv";
-    //     break;
-    //   }
-    // }
-    // if( uri== false ) return false;
-    // //---------/ get url google docs ---------------------------------------------------//
-
-    // //---------- get google docs csv ---------------------------------------------------//
-    // let req = await request(uri, {
-    //         method: 'GET',
-    //         headers: {},
-    // });
-    // let sheet = await csv.parse(req.body);
-    // //---------/ get google docs csv ---------------------------------------------------//
+    let sheet = [];
     
-
-    // return sheet;
+    //----------------------------------------------------------//
+    let line = [];
+    for (let row in result) { line.push(row); }
+    sheet.push(line );
+    //----------------------------------------------------------//
+    for (let index = 0; index < result['артикул'].length; index++) {
+        let line = [];
+        for (let row in result) { 
+            line.push( result[row][index] );
+        }
+        sheet.push(line );
+    }
+    return sheet;
 });

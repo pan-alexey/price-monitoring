@@ -55,7 +55,7 @@ module.exports = (async function(array) {
                 let pureUrl = array[i].split('?')[0];
 
                 await page.goto(pureUrl,{timeout: 300000});
-                await page.waitFor(config.delay);
+                //await page.waitFor(config.delay);
 
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
@@ -67,7 +67,7 @@ module.exports = (async function(array) {
                     price = price && !isNaN(price) ? parseInt(price) : false;
 
                 if( $('[itemprop="offers"]').find('[data-behaviour="get-analog"]').text() ){
-                    price = false
+                    price = false;
                 }
 
 
@@ -90,12 +90,13 @@ module.exports = (async function(array) {
                     price : price,
                     priceAdd : priceAdd,
                     avalible : avalible,
-                    time : moment().format("YYYY-MM-DD HH:mm:ss"),
+                    //time : moment().format("YYYY-MM-DD HH:mm:ss"),
                 }
             }catch(e){
                 result[array[i]] = {
                     status : "error",
                 }
+                console.log(e);
             }
             //--------------------------------------------//
          }

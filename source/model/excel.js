@@ -140,9 +140,6 @@ module.exports = (async function(sheet, name) {
             }
             if( sheet[i][j]['status'] == "ok" ){
                 let price = sheet[i][j]['price'] ? sheet[i][j]['price'] : "####";
-
-
-
                 worksheet.getRow(i+1).getCell(j+1).value  = { text: price, hyperlink: sheet[i][j]['url'] };
                 //-----------------------------------------------//
                 if( sheet[i][j]['avalible'] ){

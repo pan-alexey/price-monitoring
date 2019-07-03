@@ -13,11 +13,11 @@ const competitor = require(root_path+'/config/competitor');
 (async () => {
     // console.log("test comptetitor");
     // name = competitor["220 вольт"];
-    crawler = require( root_path+"/crawler/"+ competitor["озон"] );
+    crawler = require( root_path+"/crawler/"+ competitor["все инструменты"] );
     let url = await crawler([
-        'https://www.ozon.ru/context/detail/id/3853950/',
-        'https://www.ozon.ru/context/detail/id/19761409/',
-        'https://www.ozon.ru/context/detail/id/26058375/',
+        'https://krasnodar.vseinstrumenti.ru/instrument/shurupoverty/akkumulyatornye-dreli/bezudarnye/dewalt/besschetochnaya-shurupovert-18-0-v-xr-dcd777s2t/',
+        // 'https://www.ozon.ru/context/detail/id/19761409/',
+        // 'https://www.ozon.ru/context/detail/id/26058375/',
     ]);
     console.log(url);
 })();

@@ -16,7 +16,7 @@ const split_array = require(root_path+'/source/helpers/split_array');
 
 
 //------------------------------------------------------//
-module.exports = (async function(sheet) {
+module.exports = (async function(sheet, confifForAll = false) {
     if(sheet===false) return false;
 
     //console.log(sheet);
@@ -24,7 +24,9 @@ module.exports = (async function(sheet) {
     //Находим колонку "код поставщика"
     let index = 8;  
     sheet[0].forEach(function(element,i){
-        if (element === "Код поставщика") index = i+1;
+
+        element.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
+        if (element === "код поставщика") index = i+1;
     });
     //---------------------------------------------------//
 
@@ -78,6 +80,12 @@ module.exports = (async function(sheet) {
             threads = config.threads_competitor[name];
         }
 
+
+        if (confifForAll && typeof config.accumulate_competitor[name] !== 'undefined') {
+            threads = config.accumulate_competitor[name];
+        }   
+
+        //confifForAll
 
         let parts = sub_array(data[raw_name], threads);
 
