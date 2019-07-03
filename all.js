@@ -50,7 +50,7 @@ const minPercent = 5;
            result[i][j] = '';
            // Цена конкурентов
            if(j > index){
-                let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] ) ? sheet[i][j]['price'] : '';
+                let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] && sheet[i][j]['quantity']) ? sheet[i][j]['price'] : '';
                 if( price) linePrice.push(price);
                 result[i][j] = price;
            }
