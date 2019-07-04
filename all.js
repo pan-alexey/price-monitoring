@@ -18,7 +18,7 @@ const minPercent = 5;
 
 (async () => {
 
-
+    const start= new Date().getTime();
     let sheet = await require("./source/model/accumulate_sheets")();
         sheet = await require("./source/model/own_price")(sheet);
         sheet = await require("./source/model/competitor_price")(sheet, true);
@@ -50,7 +50,7 @@ const minPercent = 5;
            result[i][j] = '';
            // Цена конкурентов
            if(j > index){
-                let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] && sheet[i][j]['quantity']) ? sheet[i][j]['price'] : '';
+                let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] && sheet[i][j]['avalible']) ? sheet[i][j]['price'] : '';
                 if( price) linePrice.push(price);
                 result[i][j] = price;
            }
@@ -88,6 +88,8 @@ const minPercent = 5;
 
 
 
-
+    const end = new Date().getTime();
+    let elapsed = parseInt( (end - start)/1000 ) ;
+    console.log( elapsed );
     
 })();

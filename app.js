@@ -7,8 +7,8 @@ const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 
 
 
-
-const name = "dewalt";
+const name = process.argv[2];
+//const name = "stanley (ручной инструмент)";
 
 
 

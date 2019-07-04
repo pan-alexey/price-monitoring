@@ -20,9 +20,9 @@ module.exports = {
     "ozon"  : "ozon.ru",
     "юлмарт"  : "ulmart.ru",
     "котофото"  : "kotofoto.ru", 
-    "eлмолл23"  : "elmall23.ru", 
+    "elmall23"  : "elmall23.ru", 
     "онлайн трейд"  : "onlinetrade.ru",
     "ударник"  : "udarnik74.ru", 
-
+    "metabo.su"  : "metabo.su", 
 
 }

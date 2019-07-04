@@ -13,11 +13,11 @@ const competitor = require(root_path+'/config/competitor');
 (async () => {
     // console.log("test comptetitor");
     // name = competitor["220 вольт"];
-    crawler = require( root_path+"/crawler/"+ competitor["все инструменты"] );
+    crawler = require( root_path+"/crawler/"+ competitor["metabo.su"] );
     let url = await crawler([
-        'https://krasnodar.vseinstrumenti.ru/instrument/shurupoverty/akkumulyatornye-dreli/bezudarnye/dewalt/besschetochnaya-shurupovert-18-0-v-xr-dcd777s2t/',
-        // 'https://www.ozon.ru/context/detail/id/19761409/',
-        // 'https://www.ozon.ru/context/detail/id/26058375/',
+        'https://metabo.su/tools/akkumulyatornye-instrumenty/zaryadnye-ustroystva/basic-set-40-2-akk-40ach-18vzu-asc-30-36-685050000/',
+        'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyy-vintovert-bs-18-ltx-impuls-18-volt-60219165/',
+        'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyj-vintovert-powermaxx-bs-quick-pro-10-8-vol-t-600157700/',
     ]);
     console.log(url);
 })();
