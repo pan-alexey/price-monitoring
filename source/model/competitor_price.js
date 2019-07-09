@@ -24,9 +24,8 @@ module.exports = (async function(sheet, confifForAll = false) {
     //Находим колонку "код поставщика"
     let index = 8;  
     sheet[0].forEach(function(element,i){
-
-        element.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
-        if (element === "код поставщика") index = i+1;
+        let name = element.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
+        if (name === "код поставщика") index = i+1;
     });
     //---------------------------------------------------//
 

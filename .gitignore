@@ -1,2 +1,6 @@
 node_modules
 tmp/*
+all/*
+
+!all/.gitfile
+!tmp/.gitfile

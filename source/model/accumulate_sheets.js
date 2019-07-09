@@ -29,7 +29,7 @@ module.exports = (async function() {
 
 
      // Создаем объект
-     let array = [['артикул', "файл", 'дата', 'мин. % наценки' , 'название' ,  'цена на сайте' ,  'цена закупки' ,  'рекомендованная цена', 'минимальная цена конкурента' , 'код поставщика']];
+     let array = [['артикул', "файл", 'дата', 'мин. % наценки (им)' , 'название' ,  'цена на сайте' ,  'цена закупки' ,  'минимальная цена', 'рекомендованная цена', 'минимальная цена конкурента' , 'код поставщика']];
      for (let competitor in config.accumulate_competitor) {
          array[0].push( competitor );
      }
@@ -46,10 +46,14 @@ module.exports = (async function() {
         });
         let data = await csv.parse(req.body);
         data[0].forEach( (element,i) => {
-            data[0][i] = element.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
+            let name = element.replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
+                name = name.slice(-1) == "*" ? name.substring(0, name.length - 1) : name;
+                data[0][i] = name;
         });
-        data =  array_to_obj( data );
+        
 
+
+        data =  array_to_obj( data );
 
 
         // Создаем конкуретов если их не существует
@@ -59,7 +63,7 @@ module.exports = (async function() {
 
                 let dummy = "";
                 if (row == "файл") { dummy = sheet;}
-                if (row == "дата") { dummy = moment().format("YYYYMMDD HH-mm-ss");}
+                if (row == "дата") { dummy = moment().format("YYYY-MM-DD HH-mm-ss");}
                 data[row] = createArray( data["артикул"].length , dummy);
 
             }

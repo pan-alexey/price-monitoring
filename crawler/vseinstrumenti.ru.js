@@ -17,15 +17,18 @@ module.exports = (async function(array) {
     let browserPparams = {};
     browserPparams.headless = false;//true;
     browserPparams.ignoreHTTPSErrors = true;
-
-    let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
-    //if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+
+    // let proxy = config.proxy;
+    // if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
 
     const browser = await puppeteer.launch(browserPparams);
     const page = await browser.newPage();
     await page.setViewport({ width:  1366, height: 768 });
     await page.setGeolocation({latitude: 45.043396, longitude: 38.981116});
+
+
+
 
 
 	// // -- Отключаем картинки и стили --//
@@ -40,6 +43,14 @@ module.exports = (async function(array) {
         //-----  Блок настройки города на сайте конкурента  --------------//
         await page.goto("https://krasnodar.vseinstrumenti.ru/",{timeout: 300000});
         await page.waitFor(config.delay);
+
+        // await page.evaluate(()=>{
+        //     const nodeList = document.querySelectorAll('[data-behaviour="choseRepresent"]');
+        //     for(let i = 0; i < nodeList.length; ++i) {
+        //         regionButton[i].click();
+        //     }
+        // }); 
+
         //----/  Блок настройки города на сайте конкурента  --------------//
     }catch(e){}
 

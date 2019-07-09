@@ -4,6 +4,11 @@ require('events').EventEmitter.defaultMaxListeners = 0
 
 const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 const moment = require('moment');
+const path = require('path');
+const root_path = path.dirname(require.main.filename || process.mainModule.filename);
+const config = require(root_path+'/config/config');
+
+
 //const array_to_obj = require('/source/helpers/array_to_object');
 
 function arrayMin(arr) {
@@ -12,9 +17,15 @@ function arrayMin(arr) {
     });
 }
 
+let limitMax = function(value, limit, def = ''){
+    if(!value || !limit) return def;
+    return value < limit ? limit : value;
+}
 
 
-const minPercent = 5;
+
+//минимальный процент наценки в интернете
+const minPercent = config["min_percent_internet"];;
 
 (async () => {
 
@@ -23,8 +34,8 @@ const minPercent = 5;
         sheet = await require("./source/model/own_price")(sheet);
         sheet = await require("./source/model/competitor_price")(sheet, true);
     
-        //Расчет оптимальной цены производиться тут
-        //Добавляем колонку рекомендованной цены
+    //Расчет оптимальной цены производиться тут
+    //Добавляем колонку рекомендованной цены
 
 
     //Формируем массив ключей
@@ -45,44 +56,43 @@ const minPercent = 5;
         let line = sheet[i];
         result[i] = [];
 
-        let linePrice = [];
+        let prices = [];
         for (let j = 0; j < line.length; j++) {
-           result[i][j] = '';
            // Цена конкурентов
            if(j > index){
                 let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] && sheet[i][j]['avalible']) ? sheet[i][j]['price'] : '';
-                if( price) linePrice.push(price);
+                if( price) prices.push(price);
                 result[i][j] = price;
+           }else{
+            result[i][j] = line[j];
            }
         }
 
-        result[i][ keys["код поставщика"] ]  = sheet[i][keys["код поставщика"]]  ;
+        // result[i][ keys["код поставщика"] ]  = sheet[i][keys["код поставщика"]]  ;
+        // result[i][ keys["артикул"] ]  = sheet[i][keys["артикул"]]["id"]  ;
+        // result[i][ keys["файл"] ]  = sheet[i][keys["файл"]]  ;
+        // result[i][ keys["дата"] ]  = sheet[i][keys["дата"]]  ;
+        // result[i][ keys["мин. % наценки"] ]  = sheet[i][keys["мин. % наценки"]] ? sheet[i][keys["мин. % наценки"]] : minPercent ;
+        // result[i][ keys["название"] ]  = sheet[i][keys["артикул"]]["name"] ? sheet[i][keys["артикул"]]["name"] : '' ;
+
         result[i][ keys["артикул"] ]  = sheet[i][keys["артикул"]]["id"]  ;
-        result[i][ keys["файл"] ]  = sheet[i][keys["файл"]]  ;
-        result[i][ keys["дата"] ]  = sheet[i][keys["дата"]]  ;
-        result[i][ keys["мин. % наценки"] ]  = sheet[i][keys["мин. % наценки"]] ? sheet[i][keys["мин. % наценки"]] : minPercent ;
-        result[i][ keys["название"] ]  = sheet[i][keys["артикул"]]["name"] ? sheet[i][keys["артикул"]]["name"] : '' ;
+        result[i][ keys["цена на сайте"] ]  = sheet[i][keys["артикул"]]["price"] ? parseInt( sheet[i][keys["артикул"]]["price"] ) : '';
+        result[i][ keys["цена закупки"] ]  = sheet[i][keys["артикул"]]["purchase_price"] ? parseInt( sheet[i][keys["артикул"]]["purchase_price"] ) : '';
+        result[i][ keys["мин. % наценки (им)"] ]  = sheet[i][keys["мин. % наценки (им)"]] ? sheet[i][keys["мин. % наценки (им)"]] : minPercent ;
 
-
-        result[i][ keys["цена на сайте"] ]  = sheet[i][keys["артикул"]]["id"] ? parseInt( sheet[i][keys["артикул"]]["price"] ) : '';
-        result[i][ keys["цена закупки"] ]  = sheet[i][keys["артикул"]]["id"] ? parseInt( sheet[i][keys["артикул"]]["purchase_price"] ) : '';
-
-        result[i][ keys["минимальная цена конкурента"] ]  = linePrice.length > 0 ? arrayMin(linePrice) :'';
-
-        result[i][ keys["рекомендованная цена"] ] = result[i][ keys["цена на сайте"] ];
-        if( result[i][ keys["минимальная цена конкурента"] ] ){
-            let minPrice = result[i][ keys["цена закупки"] ] *  ( (result[i][ keys["мин. % наценки"] ] + 100)/100 ) ;
-                minPrice = parseInt(minPrice);
-                minPrice = minPrice > result[i][ keys["минимальная цена конкурента"] ] ? minPrice :  result[i][ keys["минимальная цена конкурента"] ];
-                minPrice = result[i][ keys["цена на сайте"] ] > minPrice ? minPrice : result[i][ keys["цена на сайте"] ];
-                result[i][ keys["рекомендованная цена"] ] = minPrice;
-        }
+       //result[i][ keys["цена закупки"] ]
+        let minPrice = parseInt(  result[i][ keys["цена закупки"] ]*( (sheet[i][keys["мин. % наценки (им)"]] + 100 )/100) );
+        result[i][ keys["минимальная цена"] ]  =  minPrice ? minPrice : '';
+        result[i][ keys["минимальная цена конкурента"] ]  = prices.length > 0 ? arrayMin(prices)-1 :'';
+        result[i][ keys["рекомендованная цена"] ] = limitMax( result[i][ keys["минимальная цена конкурента"] ] ,result[i][ keys["минимальная цена"] ], result[i][ keys["цена на сайте"] ]  );
     }
+
+
 
 
     //Сохрнаяем файл в CSV
     const csvWriter = createCsvWriter({
-        path: 'price-ecommerce.csv'
+        path: root_path+'/all/ecommerce' + moment().format("YYYYMMDD HH-mm-ss") + '.csv'
     });
     await csvWriter.writeRecords(result)       // returns a promise
 

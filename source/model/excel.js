@@ -7,7 +7,7 @@ module.exports = (async function(sheet, name) {
 
 
 
-    let date = moment().format("YYYYMMDD HH-mm-ss");
+    let date = moment().format("YYYY-MM-DD HH-mm-ss");
     let file = root_path + "/tmp/" + " ["+date+"] " + name + " .xlsx";
 
 
@@ -25,9 +25,12 @@ module.exports = (async function(sheet, name) {
     let index = 12; // столбец с которого начинается конкуренты
     //--------------------------------------------------//
     for (let i = 0; i < sheet[0].length; i++) {
-        let key = sheet[0][i].replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
-        keys[ key ] = i;
-        if(sheet[0][i]=="*") { index = i; }
+        try {
+            let key = sheet[0][i].replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
+            keys[ key ] = i;
+            if(sheet[0][i]=="*") { index = i; }   
+        } catch (error) {}
+
     }
 
     //-----------------------  ЗАГОЛОВОК ----------------------------//
@@ -57,7 +60,10 @@ module.exports = (async function(sheet, name) {
             if(typeof sheet[i][j] !== "object"){
                 worksheet.getRow(i+1).getCell(j+1).value  = sheet[i][j];
                 continue;
+            }else{
+                worksheet.getRow(i+1).getCell(j+1).value  = "object";
             }
+
             //-----------------------------------------//
             if(keys['актуальная закупка (руб.)'] == j){
                 worksheet.getRow(i+1).getCell(j+1).value  = parseInt(sheet[i][j]["value"]);
@@ -65,7 +71,7 @@ module.exports = (async function(sheet, name) {
                     worksheet.getRow(i+1).getCell(j+1).fill = {
                         type: 'pattern', pattern:'solid',
                         fgColor:{argb:'FFFF8A65'},
-                        bgColor:{argb:'FFFF8A65'}
+                        bgColor:{argb:'FFСССССС'}
                     };
                 }
             }
@@ -76,7 +82,7 @@ module.exports = (async function(sheet, name) {
                     worksheet.getRow(i+1).getCell(j+1).fill = {
                         type: 'pattern', pattern:'solid',
                         fgColor:{argb:'FFFF8A65'},
-                        bgColor:{argb:'FFFF8A65'}
+                        bgColor:{argb:'FFСССССС'}
                     };
                 }
             }
@@ -84,7 +90,7 @@ module.exports = (async function(sheet, name) {
             if(keys['название'] == j){
                 worksheet.getRow(i+1).getCell(j+1).value  = { 
                     text: sheet[i][j]["name"], 
-                    hyperlink: sheet[i][j]["url"]
+                    hyperlink:  sheet[i][j]["url"]
                 };
             }
             //-----------------------------------------------------------//
@@ -93,22 +99,25 @@ module.exports = (async function(sheet, name) {
         //----------------------------------------------------------------------//
 
 
-        
-        //----------------------------------------------------------------------//
-        //----------------------------------------------------------------------//
-        for (let j = keys['цена продажная']+1;  j <= keys['минимальная цена конкурента руб. (все)']; j++) {
-            let value = parseInt(sheet[i][j]);
-            //-----------------------------------------------------------------//
+
+        for (let j = keys['розница - минимальная актуальная']+1;  j < keys['конкуренты с меньшей ценой (в наличии + избранное)']; j++) {
+
+            let value = isNaN(sheet[i][j]) ? false : parseInt(sheet[i][j]);
             if( !value ) {
                 worksheet.getRow(i+1).getCell(j+1).value  = "";
                 continue;
             }
-            worksheet.getRow(i+1).getCell(j+1).value  = value;
 
-            let price = parseInt(sheet[i][keys['цена продажная']]);
+            let key;
+            try {key = sheet[0][i].replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();} catch (error) {
+                key = "";
+            }
+           
+            
+            let price = key.indexOf("розница") ? parseInt(sheet[i][keys['цена продажная (*)']]) :  parseInt(sheet[i][keys['цена продажная']]);
             if( !price ) continue;
 
-            //----------------------------------------//
+            worksheet.getRow(i+1).getCell(j+1).value  = value;
             if(value > price ){
                 worksheet.getRow(i+1).getCell(j+1).fill = {
                     type: 'pattern', pattern:'solid',
@@ -124,10 +133,8 @@ module.exports = (async function(sheet, name) {
                     bgColor:{argb:'FFFF8A65'}
                 };
             }
-            //----------------------------------------//
-        }
-        //----------------------------------------------------------------------//
 
+        }
 
 
 
@@ -146,13 +153,13 @@ module.exports = (async function(sheet, name) {
                     worksheet.getRow(i+1).getCell(j+1).fill = {
                         type: 'pattern', pattern:'solid',
                         fgColor:{argb:'FF4DB6AC'},
-                        bgColor:{argb:'FF4DB6AC'}
+                        bgColor:{argb:'FFСССССС'}
                     };
                 }else{
                     worksheet.getRow(i+1).getCell(j+1).fill = {
                         type: 'pattern', pattern:'solid',
                         fgColor:{argb:'FFFF8A65'},
-                        bgColor:{argb:'FFFF8A65'}
+                        bgColor:{argb:'FFСССССС'}
                     }; 
                 }
                 //-----------------------------------------------//

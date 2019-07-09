@@ -7,8 +7,8 @@ const createCsvWriter = require('csv-writer').createArrayCsvWriter;
 
 
 
-const name = process.argv[2];
-//const name = "stanley (ручной инструмент)";
+let name = process.argv[2];
+name = "dewalt";
 
 
 
@@ -27,19 +27,26 @@ const name = process.argv[2];
 
     // muttable (add addition columns)
     sheet = await require("./source/model/add_colums")(sheet);
+
+
     //console.log( sheet );
     //calc value
     sheet = await require("./source/model/calculate")(sheet);
 
-    //Create EXCEL
-    excel = await require("./source/model/excel")(sheet, name);
 
 
 
-
+    const createCsvWriter = require('csv-writer').createArrayCsvWriter;
     const end = new Date().getTime();
     let elapsed = parseInt( (end - start)/1000 ) ;
+    const endTime = new Date().getTime();
+    const csvWriter = createCsvWriter({
+        path: 'tmp/'+name+"-"+endTime+'.csv'
+    });
+    await csvWriter.writeRecords(sheet)       // returns a promise
 
+    //Create EXCEL
+    excel = await require("./source/model/excel")(sheet, name);
 
     console.log( elapsed );
     
