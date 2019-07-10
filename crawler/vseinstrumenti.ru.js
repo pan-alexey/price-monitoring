@@ -63,10 +63,10 @@ module.exports = (async function(array) {
             //--------------------------------------------//
             try {
 
-                let pureUrl = array[i].split('?')[0];
+                let pureUrl = array[i];
 
                 await page.goto(pureUrl,{timeout: 300000});
-                //await page.waitFor(config.delay);
+                await page.waitFor(500);
 
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
@@ -107,6 +107,7 @@ module.exports = (async function(array) {
                 result[array[i]] = {
                     status : "error",
                 }
+                console.log("CATCH ERROR URL : " + array[i]);
                 console.log(e);
             }
             //--------------------------------------------//

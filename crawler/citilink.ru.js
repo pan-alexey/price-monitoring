@@ -24,12 +24,7 @@ module.exports = (async function(array) {
 
 
 
-    const cookie = {
-        name: 'login_email',
-        value: 'set_by_cookie@domain.com',
-        domain: '.paypal.com',
 
-    }
 
 
 
@@ -65,7 +60,7 @@ module.exports = (async function(array) {
 
                 let pureUrl = array[i].split('?')[0];
                 await page.goto(pureUrl,{timeout: 300000});
-
+                await page.waitFor(300);
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
                 });
@@ -98,6 +93,9 @@ module.exports = (async function(array) {
                 result[array[i]] = {
                     status : "error",
                 }
+
+                console.log("CATCH ERROR URL : " + array[i]);
+                console.log(e);
             }
             //--------------------------------------------//
          }
