@@ -13,7 +13,10 @@ const sub_array = require(root_path+'/source/helpers/sub_array');
 const split_array = require(root_path+'/source/helpers/split_array');
 //------------------------------------------------------//
 
-
+function isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
 
 //------------------------------------------------------//
 module.exports = (async function(sheet, confifForAll = false) {
@@ -28,6 +31,15 @@ module.exports = (async function(sheet, confifForAll = false) {
         if (name === "код поставщика") index = i+1;
     });
     //---------------------------------------------------//
+    for (let i = 1; i < sheet.length; i++) {
+        let line = sheet[i];
+        for (let j = index; j < sheet[i].length; j++) {
+            //только валидные ссылки
+            sheet[i][j] = !isValidURL(sheet[i][j]) ? '' : sheet[i][j];
+        }
+    }
+
+
 
     //===================================================//
     //-------  Формируем правила конкурентов ------------//

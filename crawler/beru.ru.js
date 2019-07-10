@@ -21,7 +21,7 @@ module.exports = (async function(array) {
 
     let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
-    if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}
+    //if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}
 
     
     const browser = await puppeteer.launch(browserPparams);
@@ -54,10 +54,10 @@ module.exports = (async function(array) {
             //--------------------------------------------//
             try {
 
-                let pureUrl = array[i].split('?')[0];
+                let pureUrl = array[i];
 
                 await page.goto(pureUrl,{timeout: 300000});
-
+                await page.waitFor(300);
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
                 });
@@ -72,11 +72,8 @@ module.exports = (async function(array) {
                     priceAdd = priceAdd && !isNaN(priceAdd) ? parseInt(priceAdd) : false;
                
                 // Парсинг наличия
-                let selector = $('[itemprop="offers"]')
-                                .find('a[href="#add-to-cart"]')
-                                .children('span[data-view-table="box-hidden"]')
-                                .text().toLowerCase();
-                let avalible = ( selector.indexOf("в корзину")>=0  ) ? true : false;
+                let selector = $('[data-zone-name="skuAvailability"]').text().toLowerCase();
+                let avalible = ( selector.indexOf("в наличии на складе")>=0  ) ? true : false;
 
                 //Формируем результат
                 result[array[i]] = {

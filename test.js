@@ -13,11 +13,11 @@ const competitor = require(root_path+'/config/competitor');
 (async () => {
     // console.log("test comptetitor");
     // name = competitor["220 вольт"];
-    crawler = require( root_path+"/crawler/"+ competitor["metabo.su"] );
+    crawler = require( root_path+"/crawler/"+ competitor["беру"] );
     let url = await crawler([
-        'https://metabo.su/tools/akkumulyatornye-instrumenty/zaryadnye-ustroystva/basic-set-40-2-akk-40ach-18vzu-asc-30-36-685050000/',
-        'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyy-vintovert-bs-18-ltx-impuls-18-volt-60219165/',
-        'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyj-vintovert-powermaxx-bs-quick-pro-10-8-vol-t-600157700/',
+        'https://beru.ru/product/100328902833?show-uid=15421777270086446498216001%27&ncrnd=1295',
+        // 'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyy-vintovert-bs-18-ltx-impuls-18-volt-60219165/',
+        // 'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyj-vintovert-powermaxx-bs-quick-pro-10-8-vol-t-600157700/',
     ]);
     console.log(url);
 })();

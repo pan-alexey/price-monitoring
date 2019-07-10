@@ -34,6 +34,9 @@ const minPercent = config["min_percent_internet"];;
         sheet = await require("./source/model/own_price")(sheet);
         sheet = await require("./source/model/competitor_price")(sheet, true);
     
+
+
+        console.log( sheet[0] );
     //Расчет оптимальной цены производиться тут
     //Добавляем колонку рекомендованной цены
 
@@ -45,6 +48,7 @@ const minPercent = config["min_percent_internet"];;
     //--------------------------------------------------//
     for (let i = 0; i < sheet[0].length; i++) {
         let key = sheet[0][i].replace(/\s+/g, " ").replace(/^\s|\s$/g, "").toLowerCase();
+            key = key.slice(-1) == "*" ? key.substring(0, key.length - 1) : key;
         keys[ key ] = i;
         if(sheet[0][i]=="код поставщика") { index = i; }
     }
@@ -53,6 +57,7 @@ const minPercent = config["min_percent_internet"];;
    
     result[0] = sheet[0];
     for (let i = 1; i < sheet.length; i++) {
+
         let line = sheet[i];
         result[i] = [];
 
@@ -60,7 +65,7 @@ const minPercent = config["min_percent_internet"];;
         for (let j = 0; j < line.length; j++) {
            // Цена конкурентов
            if(j > index){
-                let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] && sheet[i][j]['avalible']) ? sheet[i][j]['price'] : '';
+                let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] ) ? sheet[i][j]['price'] : '';
                 if( price) prices.push(price);
                 result[i][j] = price;
            }else{
@@ -92,7 +97,7 @@ const minPercent = config["min_percent_internet"];;
 
     //Сохрнаяем файл в CSV
     const csvWriter = createCsvWriter({
-        path: root_path+'/all/ecommerce' + moment().format("YYYYMMDD HH-mm-ss") + '.csv'
+        path: root_path+'/all/' + moment().format("YYYYMMDD HH-mm-ss") + ' all.csv'
     });
     await csvWriter.writeRecords(result)       // returns a promise
 
