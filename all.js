@@ -66,7 +66,7 @@ const minPercent = config["min_percent_internet"];;
            // Цена конкурентов
            if(j > index){
                 let price = ( sheet[i][j]['status'] == "ok" && sheet[i][j]['price'] ) ? sheet[i][j]['price'] : '';
-                if( price) prices.push(price);
+                if( price) prices.push( parseInt(price) );
                 result[i][j] = price;
            }else{
             result[i][j] = line[j];
@@ -84,7 +84,7 @@ const minPercent = config["min_percent_internet"];;
         result[i][ keys["цена на сайте"] ]  = sheet[i][keys["артикул"]]["price"] ? parseInt( sheet[i][keys["артикул"]]["price"] ) : '';
         result[i][ keys["цена закупки"] ]  = sheet[i][keys["артикул"]]["purchase_price"] ? parseInt( sheet[i][keys["артикул"]]["purchase_price"] ) : '';
         result[i][ keys["мин. % наценки (им)"] ]  = sheet[i][keys["мин. % наценки (им)"]] ? sheet[i][keys["мин. % наценки (им)"]] : minPercent ;
-        
+
         let minPrice = parseInt( parseInt(result[i][ keys["цена закупки"] ]) * ((100 + sheet[i][keys["мин. % наценки (им)"]])/100) );
         result[i][ keys["минимальная цена"] ]  =  minPrice ? minPrice : '';
         result[i][ keys["минимальная цена конкурента"] ]  = prices.length > 0 ? arrayMin(prices)-1 :'';
