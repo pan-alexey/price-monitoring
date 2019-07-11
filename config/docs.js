@@ -9,6 +9,7 @@ module.exports = {
     "bosch blue (электроинструмент)" : "1tqH6n-ijRAXmdzrsErb8iAmZS6Ckk1gD-aYwMj7o9so",
     "bosch blue (измерительная техника)" : "1o1DDtAn6bZXM-l3kLT3APL7-G4zr-HoVk50DhNqrscE",
 
+    "elitech (электроинструмент)" : "176HoCUEiir9rzPX-iovWPZmbayBJxDFULgU-SHFud6E",
     
 }
 

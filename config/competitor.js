@@ -13,7 +13,7 @@ module.exports = {
     "obi"  : "obi.ru",
     "ситилинк"  : "citilink.ru",
     "юлмарт"  : "ulmart.ru",
-    "элитех"  : "elitech-m.ru",
+    "elitech-m"  : "elitech-m.ru",
     "макита-про"  : "makitapro.ru",
     "эльдорадо (003)"  : "eldorado.ru",
     "23киловатт"  : "23kw.ru",

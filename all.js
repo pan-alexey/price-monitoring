@@ -19,7 +19,7 @@ function arrayMin(arr) {
 
 let limitMax = function(value, limit, def = ''){
     if(!value || !limit) return def;
-    return value < limit ? limit : value;
+    return parseInt(value) < parseInt(limit) ? parseInt(limit) : parseInt(value);
 }
 
 
@@ -83,7 +83,7 @@ const minPercent = config["min_percent_internet"];;
         result[i][ keys["артикул"] ]  = sheet[i][keys["артикул"]]["id"]  ;
         result[i][ keys["цена на сайте"] ]  = sheet[i][keys["артикул"]]["price"] ? parseInt( sheet[i][keys["артикул"]]["price"] ) : '';
         result[i][ keys["цена закупки"] ]  = sheet[i][keys["артикул"]]["purchase_price"] ? parseInt( sheet[i][keys["артикул"]]["purchase_price"] ) : '';
-        result[i][ keys["мин. % наценки (им)"] ]  = sheet[i][keys["мин. % наценки (им)"]] ? sheet[i][keys["мин. % наценки (им)"]] : minPercent ;
+        result[i][ keys["мин. % наценки (им)"] ]  = sheet[i][keys["мин. % наценки (им)"]] ? parseInt(sheet[i][keys["мин. % наценки (им)"]]) : parseInt(minPercent) ;
 
         let minPrice = parseInt( parseInt(result[i][ keys["цена закупки"] ]) * ((100 + sheet[i][keys["мин. % наценки (им)"]])/100) );
         result[i][ keys["минимальная цена"] ]  =  minPrice ? minPrice : '';
