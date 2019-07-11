@@ -91,7 +91,7 @@ const minPercent = config["min_percent_internet"];;
         result[i][ keys["рекомендованная цена"] ] = limitMax( result[i][ keys["минимальная цена конкурента"] ] ,result[i][ keys["минимальная цена"] ], result[i][ keys["цена на сайте"] ]  );
         
         //Не повышаем продажную цену;
-        result[i][ keys["рекомендованная цена"] ] = result[i][ keys["рекомендованная цена"] ] > result[i][ keys["цена на сайте"] ]  ? result[i][ keys["цена на сайте"] ]  : result[i][ keys["рекомендованная цена"] ];
+        result[i][ keys["рекомендованная цена"] ] = result[i][ keys["рекомендованная цена"] ] >= result[i][ keys["цена на сайте"] ]  ? result[i][ keys["цена на сайте"] ]  : result[i][ keys["рекомендованная цена"] ];
     
     }
 

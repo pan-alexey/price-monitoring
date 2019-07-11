@@ -15,7 +15,8 @@ const competitor = require(root_path+'/config/competitor');
     // name = competitor["220 вольт"];
     crawler = require( root_path+"/crawler/"+ competitor["беру"] );
     let url = await crawler([
-        'https://beru.ru/product/100328902833?show-uid=15421777270086446498216001%27&ncrnd=1295',
+        'https://elitech-line.ru/catalog/akkumulyator-gtx20-bs-elitech-0105-000500/',
+        'https://elitech-line.ru/catalog/akkumulyator-gtx20-bs-elitech-0105-000500/',
         // 'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyy-vintovert-bs-18-ltx-impuls-18-volt-60219165/',
         // 'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyj-vintovert-powermaxx-bs-quick-pro-10-8-vol-t-600157700/',
     ]);
