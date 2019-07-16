@@ -80,9 +80,12 @@ const minPercent = config["min_percent_internet"];;
         // result[i][ keys["мин. % наценки"] ]  = sheet[i][keys["мин. % наценки"]] ? sheet[i][keys["мин. % наценки"]] : minPercent ;
         // result[i][ keys["название"] ]  = sheet[i][keys["артикул"]]["name"] ? sheet[i][keys["артикул"]]["name"] : '' ;
 
+    
+
         result[i][ keys["артикул"] ]  = sheet[i][keys["артикул"]]["id"]  ;
         result[i][ keys["цена на сайте"] ]  = sheet[i][keys["артикул"]]["price"] ? parseInt( sheet[i][keys["артикул"]]["price"] ) : '';
-        result[i][ keys["цена закупки"] ]  = sheet[i][keys["артикул"]]["purchase_price"] ? parseInt( sheet[i][keys["артикул"]]["purchase_price"] ) : '';
+        //result[i][ keys["цена закупки"] ]  = sheet[i][keys["артикул"]]["purchase_price"] ? parseInt( sheet[i][keys["артикул"]]["purchase_price"] ) : '';
+        result[i][ keys["цена закупки"] ]  = sheet[i][keys["артикул"]]["actual_purchase_price"] ? parseInt( sheet[i][keys["артикул"]]["purchase_price"] ) : parseInt( sheet[i][keys["артикул"]]["purchase_price"] );
         result[i][ keys["мин. % наценки (им)"] ]  = sheet[i][keys["мин. % наценки (им)"]] ? parseInt(sheet[i][keys["мин. % наценки (им)"]]) : parseInt(minPercent) ;
 
         let minPrice = parseInt( parseInt(result[i][ keys["цена закупки"] ]) * ((100 + sheet[i][keys["мин. % наценки (им)"]])/100) );

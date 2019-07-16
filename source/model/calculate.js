@@ -200,11 +200,11 @@ module.exports = (async function(sheet) {
 
         let priceInternet = {
             "min" :  parseInt( result[i][keys["цена закупки"]]  * ( 100 + min_percent_internet )/100 ),
-            "actual" : parseInt( result[i][keys["цена закупки"]]  * ( 100 + min_percent_internet )/100 ),
+            "actual" : parseInt( actual_purchase_price  * ( 100 + min_percent_internet )/100 ),
         };
         let priceRetail = {
             "min" :  parseInt( result[i][keys["цена закупки"]]  * ( 100 + min_percent_retail )/100 ),
-            "actual" : parseInt( result[i][keys["цена закупки"]]  * ( 100 + min_percent_retail )/100 ),
+            "actual" : parseInt( actual_purchase_price  * ( 100 + min_percent_retail )/100 ),
         };
 
         result[i][keys["им - минимальная"]] = priceInternet["min"];
