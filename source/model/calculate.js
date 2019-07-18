@@ -140,7 +140,6 @@ module.exports = (async function(sheet) {
         if(sheet[0][i]=="*") { index = i; }
         
     }
-    console.log( keys );
 
     //Проходим по строкам
     for (var i = 1; i < sheet.length; i++) {
