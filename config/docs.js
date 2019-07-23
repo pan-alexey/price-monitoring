@@ -21,6 +21,9 @@ module.exports = {
     "gardena (полив)" : "19wKdL-neoC5mfnMriJflvA4aZYuDBQFxrYoX4F-HzVk",
     "gardena (ручной инструмент)" : "1Rc12MU0tw5pmR7bl1qk7QCzZeOL5U_xnweFxAxdjct4",
     "gardena (насосы)" : "1I3TWXxtK5yJO8UYHehqE3CqoA21b1WGZTz_39hX0cGk",
+    "gardena (сад)" : "1Dd2R1LlSK5jbUcZDNIXO1_7X0DFYW7mmuAB36anHBjM",
+
+    
 
 }
 
