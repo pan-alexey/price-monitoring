@@ -4,7 +4,7 @@ module.exports = {
 
     "bosch green (измерительная техника)" : "1uZPLWkl_prZF1mB4z2f7jo2Qtyg12FMaJaBH-B-mOSg",
     "bosch green (сад)" : "1fijx7x3pgTsSmVQmqb5kcuYj5BDDRh3YevPwyyD1g1E",
-    
+
     "dewalt" : "1BKfROGqbYNfgIJENk5TW5N5PvCInOSg5ZX0i0r78dV8",
     "makita (электроинструмент)" : "1V52IfPnA5AFlgObWkitdbUEuFrE9ri274WSKxo4KNEg",
     "makita (сад)" : "1omRvAWZHGXQu1ceqOHwAZy_SD5_IAwcGodl7FJ5Djxo",
@@ -19,7 +19,9 @@ module.exports = {
     "elitech (электроинструмент)" : "176HoCUEiir9rzPX-iovWPZmbayBJxDFULgU-SHFud6E",
 
     "gardena (полив)" : "19wKdL-neoC5mfnMriJflvA4aZYuDBQFxrYoX4F-HzVk",
-    "gardena (полив)" : "19wKdL-neoC5mfnMriJflvA4aZYuDBQFxrYoX4F-HzVk",
+    "gardena (ручной инструмент)" : "1Rc12MU0tw5pmR7bl1qk7QCzZeOL5U_xnweFxAxdjct4",
+    "gardena (насосы)" : "1I3TWXxtK5yJO8UYHehqE3CqoA21b1WGZTz_39hX0cGk",
+
 }
 
 
