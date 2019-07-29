@@ -14,9 +14,12 @@ module.exports = {
     "stanley (электроинструмент)" : "1vW2Aww_GZgg_1QOaqari1_4e8nnZdnjTIyK4rv2cWGY",
     "stanley (ручной инструмент)" : "1q74FDiVs7Sf-16JMapGTT3voWPevR5Gaxw8G7LIRRPk",
 
-
-
     "elitech (электроинструмент)" : "176HoCUEiir9rzPX-iovWPZmbayBJxDFULgU-SHFud6E",
+    "elitech (компрессоры, сварка, нивелиры)" : "1_fOlyxEb0VYuH790RNc9AkD4B-6aBAxk2TaOJem7Xik",
+    "elitech (сад)" : "1gfFvjX7PndynJwz1lVC6BNKIxmgxT2OZH4SC3eIc07k",
+    "elitech (строительное оборудование)" : "1NrxlcbKnt5o2VvBWJfHITaFBxgyCAcRF_cZQ4Un7DeE",
+    "elitech (электростанции)" : "1wMwDPmf3ibS0MCoBR-hAfi5MNn8rmni4tvDevcPdmPs",
+
 
     "gardena (полив)" : "19wKdL-neoC5mfnMriJflvA4aZYuDBQFxrYoX4F-HzVk",
     "gardena (ручной инструмент)" : "1Rc12MU0tw5pmR7bl1qk7QCzZeOL5U_xnweFxAxdjct4",
