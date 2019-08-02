@@ -22,7 +22,7 @@ module.exports = (async function(array) {
 
     let proxy = config.proxy;
     browserPparams.args = ['--ignore-certificate-errors'];
-    if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
+    //if( proxy ) { browserPparams.args.push('--proxy-server=' + proxy );}// Настройка для прокси
     
 
     
@@ -32,13 +32,13 @@ module.exports = (async function(array) {
     //await page.setGeolocation({latitude: 59.95, longitude: 30.31667});
 
 
-	//-- Отключаем картинки и стили --//
-	await page.setRequestInterception(true);
-	page.on('request', request => {
-        if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' )request.abort();
-	    else request.continue();
-	});
-    //--/ Отключаем картинки и стили --//
+	// //-- Отключаем картинки и стили --//
+	// await page.setRequestInterception(true);
+	// page.on('request', request => {
+    //     if ( request.resourceType() === 'image'  ||request.resourceType() == 'stylesheet' ||request.resourceType() == 'script')request.abort();
+	//     else request.continue();
+	// });
+    // //--/ Отключаем картинки и стили --//
 
     try {
         //-----  Блок настройки города на сайте конкурента  --------------//
@@ -59,7 +59,7 @@ module.exports = (async function(array) {
                 let pureUrl = array[i].split('?')[0];
 
                 await page.goto(pureUrl,{timeout: 300000});
-                //await page.waitFor(config.delay);
+                await page.waitFor(3000);
                 
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
