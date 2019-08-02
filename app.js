@@ -47,7 +47,7 @@ let name = process.argv[2];
 
     //Create EXCEL
     excel = await require("./source/model/excel")(sheet, name);
-
-    console.log( elapsed );
+    
+    file = await require("./source/model/email")(name, excel);
     
 })();
