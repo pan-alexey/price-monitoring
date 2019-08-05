@@ -4,7 +4,7 @@ module.exports = function(name, excel){
 
     return new Promise(function(resolve, reject) {
         let nodemailer = require('nodemailer');
-        let mail_text = "File was created by Heisenberg V2.0 - NEW ROBOT";
+        let mail_text = "РЕЗУЛЬТАТ РАБОТЫ РОБОТА" + name ;
     
         var transporter = nodemailer.createTransport({
             host: 'smtp.yandex.ru',
@@ -19,6 +19,7 @@ module.exports = function(name, excel){
             from: 'kubaninstrument@yandex.ru',
             to: 'pan@kubaninstrument.ru',
             cc: 'fomenko@kubaninstrument.ru',
+            cc: 'samvel@kubaninstrument.ru',
             subject: 'Результат работы для: '+name,
             text: mail_text,
             attachments: [
