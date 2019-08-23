@@ -35,11 +35,9 @@ module.exports = function(name, excel){
         });
     
     
-    }).catch(
-        function(error){
-            console.log( _chalk.white.bgRed.bold(' SEND EMAIL: ') + error);
-            process.exit();
-        });
+    }).catch(function(error){
+            console.log( error );
+    });
 }
 
 

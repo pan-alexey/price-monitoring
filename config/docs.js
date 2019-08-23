@@ -5,6 +5,11 @@ module.exports = {
     "bosch green (измерительная техника)" : "1uZPLWkl_prZF1mB4z2f7jo2Qtyg12FMaJaBH-B-mOSg",
     "bosch green (сад)" : "1fijx7x3pgTsSmVQmqb5kcuYj5BDDRh3YevPwyyD1g1E",
 
+
+    "bosch green + blue (сад)" : "1iKWCRUE9lFsmQSH3SB4lP9ufzNn4pIV1_pcOfCWt6_I",
+    
+
+    
     "dewalt" : "1BKfROGqbYNfgIJENk5TW5N5PvCInOSg5ZX0i0r78dV8",
     "makita (электроинструмент)" : "1V52IfPnA5AFlgObWkitdbUEuFrE9ri274WSKxo4KNEg",
     "makita (сад)" : "1omRvAWZHGXQu1ceqOHwAZy_SD5_IAwcGodl7FJ5Djxo",
@@ -28,6 +33,13 @@ module.exports = {
 
     "зубр" : "15yjtsXxLQ9jPgnSNWIJJFQT9bAAij-Cc4m5alE2MOac",
     "энкор-корвет" : "1ZKp7f6ZXr2kRme-siX_NFLYwKHJhXemOS-k8Q7H7MOM",
+
+
+
+
+
+
+
 }
 
 
