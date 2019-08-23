@@ -3,8 +3,7 @@ module.exports = {
     "bosch blue (измерительная техника)" : "1o1DDtAn6bZXM-l3kLT3APL7-G4zr-HoVk50DhNqrscE",
 
     "bosch green (измерительная техника)" : "1uZPLWkl_prZF1mB4z2f7jo2Qtyg12FMaJaBH-B-mOSg",
-    "bosch green (сад)" : "1fijx7x3pgTsSmVQmqb5kcuYj5BDDRh3YevPwyyD1g1E",
-
+    "bosch green (электроинструмент)" : "1-ZYUKGwz0z4_ggsT4V0fC7LGLzES2ntW5PAXqSoebUc",
 
     "bosch green + blue (сад)" : "1iKWCRUE9lFsmQSH3SB4lP9ufzNn4pIV1_pcOfCWt6_I",
     
@@ -33,9 +32,6 @@ module.exports = {
 
     "зубр" : "15yjtsXxLQ9jPgnSNWIJJFQT9bAAij-Cc4m5alE2MOac",
     "энкор-корвет" : "1ZKp7f6ZXr2kRme-siX_NFLYwKHJhXemOS-k8Q7H7MOM",
-
-
-
 
 
 

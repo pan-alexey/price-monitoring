@@ -18,8 +18,7 @@ module.exports = function(name, excel){
         var mailOptions = {
             from: 'kubaninstrument@yandex.ru',
             to: 'pan@kubaninstrument.ru',
-            cc: 'fomenko@kubaninstrument.ru',
-            cc: 'samvel@kubaninstrument.ru',
+            cc: ['fomenko@kubaninstrument.ru', 'samvel@kubaninstrument.ru'],
             subject: 'Результат работы для: '+name,
             text: mail_text,
             attachments: [
