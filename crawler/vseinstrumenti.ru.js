@@ -66,7 +66,7 @@ module.exports = (async function(array) {
                 let pureUrl = array[i];
 
                 await page.goto(pureUrl,{timeout: 300000});
-                await page.waitFor(500);
+                await page.waitFor(1000);
 
                 let innerHTML = await page.evaluate(() => {
                     return document.documentElement.innerHTML;
