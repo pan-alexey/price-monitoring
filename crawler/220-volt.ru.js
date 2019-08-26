@@ -45,7 +45,12 @@ module.exports = (async function(array) {
         await page.goto("https://krasnodar.220-volt.ru/",{timeout: 300000});
         await page.waitFor(300);
         //----/  Блок настройки города на сайте конкурента  --------------//
-    }catch(e){}
+    }catch(e){
+        console.log(e)
+        result[array[i]] = {
+            status : "error",
+        }
+    }
 
 
 
@@ -104,7 +109,7 @@ module.exports = (async function(array) {
     let elapsed = parseInt( (end - start)/1000 ) ;
     let speed = parseInt(elapsed/array.length);
     // Выводим в консоль среднюю скорость обработки;
-    console.log(" [competitors: '"+__filename.slice(__dirname.length + 1, -3)+"'; elapsed time: '"+elapsed+"'; count: "+array.length+"; avg: '"+speed+"';]");
+    //console.log(" [competitors: '"+__filename.slice(__dirname.length + 1, -3)+"'; elapsed time: '"+elapsed+"'; count: "+array.length+"; avg: '"+speed+"';]");
 
     return result;
 });

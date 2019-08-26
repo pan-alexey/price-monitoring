@@ -13,16 +13,14 @@ const competitor = require(root_path+'/config/competitor');
 (async () => {
     // console.log("test comptetitor");
     // name = competitor["220 вольт"];
-    crawler = require( root_path+"/crawler/"+ competitor["220 вольт"] );
+    crawler = require( root_path+"/crawler/"+ competitor["все инструменты"] );
     let url = await crawler([
-        'https://krasnodar.220-volt.ru/catalog-399084/',
-        'https://krasnodar.220-volt.ru/catalog-79548//',
+        'https://krasnodar.vseinstrumenti.ru/sadovaya_tehnika/trimmery/benzinovye/2h_taktnie/elitech/benzokosa_elitech_bt_26/',
         // 'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyy-vintovert-bs-18-ltx-impuls-18-volt-60219165/',
         // 'https://metabo.su/tools/sverlenie-zavinchivanie-dolblenie-peremeshivanie/akkumulyatornye-dreli/akkumulyatornyj-vintovert-powermaxx-bs-quick-pro-10-8-vol-t-600157700/',
     ]);
     console.log(url);
 })();
-
 
 
 /*
