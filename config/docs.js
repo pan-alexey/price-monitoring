@@ -20,6 +20,9 @@ module.exports = {
 
 
     "elitech (сад)" : "1-nRnj-e3EdLkTW5BTX1KcRArYksSTiIDauD_bOWUdK0",
+    "elitech (измерительная техника)" : "1ONGaUeGoj5nCXUN24uF_1c_CKV-zhBDLLnI4sVXiEQE",
+    "elitech (электроинструмент, сварка, компрессора)" : "1-PHRISTdVBGjvW1vI2CnjXoN0-Lf8X-LZSu8jptpFDo",
+    "elitech (электростанции)" : "1jeuzmrZGs0ONeXW0pNxo8q7-N72q-jhTUXQ4nDxUwlQ",
 
 
     "gardena (полив)" : "19wKdL-neoC5mfnMriJflvA4aZYuDBQFxrYoX4F-HzVk",
