@@ -30,6 +30,8 @@ module.exports = {
     "gardena (насосы)" : "1I3TWXxtK5yJO8UYHehqE3CqoA21b1WGZTz_39hX0cGk",
     "gardena (сад)" : "1Dd2R1LlSK5jbUcZDNIXO1_7X0DFYW7mmuAB36anHBjM",
 
+    "remeza" : "1soA2opgnSzINarzO82pDpfUmpVGIqtfQVWBsD6Pd4BI",
+
     "зубр" : "15yjtsXxLQ9jPgnSNWIJJFQT9bAAij-Cc4m5alE2MOac",
     "энкор-корвет" : "1ZKp7f6ZXr2kRme-siX_NFLYwKHJhXemOS-k8Q7H7MOM",
 
