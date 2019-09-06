@@ -11,7 +11,7 @@ module.exports = {
     
     "dewalt" : "1BKfROGqbYNfgIJENk5TW5N5PvCInOSg5ZX0i0r78dV8",
     "makita (электроинструмент)" : "1V52IfPnA5AFlgObWkitdbUEuFrE9ri274WSKxo4KNEg",
-    "makita (сад)" : "1omRvAWZHGXQu1ceqOHwAZy_SD5_IAwcGodl7FJ5Djxo",
+    "makita (сад)" : "1Kg7NS34N06w8cY8NY2rSqwdHESlWznhc-cuiTv0tJEI",
     "metabo" : "1PKZZnKFZ_AcFEyME9xfbtA7b9CfOGcd_VzrCP_XyTaA",
 
     "pit" : "1pAtbrd0Zd0UWpyE2YlvZFW8kvG94buWLjnlu5k_7ivQ",
