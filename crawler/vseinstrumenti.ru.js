@@ -83,7 +83,7 @@ module.exports = (async function(array) {
 
 
                 // Перечеркнутая цена
-                let priceAdd =  (  $('[itemprop="offers"]').find('.text-del').text()  ).toString().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
+                let priceAdd =  (  $('[itemprop="offers"]').find('.saled-price-value').text()  ).toString().replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
                     priceAdd = priceAdd && !isNaN(priceAdd) ? parseInt(priceAdd) : false;
                
 
